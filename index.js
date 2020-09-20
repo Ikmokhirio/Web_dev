@@ -1,9 +1,10 @@
 
-function getRandomColor() { // Get RGBA hex color
-    let color = "#";
+function getRandomColorHexCode() { // Get RGBA hex color
+    let rgbaColor = "#";
 
     for(var i = 0; i < 4; i++) {
-        color += Math.floor(Math.random() * 255).toString(16);
+        rgbaColor += Math.floor(Math.random() * 255).toString(16);
     }
-    return color;
+
+    return rgbaColor;
 }
