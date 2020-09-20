@@ -1,0 +1,26 @@
+{
+  "name": "lab_1",
+  "version": "1.0.0",
+  "description": "First laboratory. Web development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ikmokhirio/Web_dev.git"
+  },
+  "keywords": [
+    "node",
+    "js"
+  ],
+  "author": "Ikmokhirio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ikmokhirio/Web_dev/issues"
+  },
+  "homepage": "https://github.com/Ikmokhirio/Web_dev#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
