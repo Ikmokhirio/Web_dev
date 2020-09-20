@@ -5,10 +5,10 @@ const port = 3000;
 const express = require("express");
 const app = express();
 
-app.get(mainUrl + "execute", function (req,res) {
+app.get(mainUrl + "execute", function (req, res) {
     let functionString = req.query.function;
 
-    if(functionString === undefined) {
+    if (functionString === undefined) {
         res.send("Incorrect data was passed");
         return;
     }
@@ -22,10 +22,10 @@ app.get(mainUrl + "execute", function (req,res) {
 
 });
 
-app.get(mainUrl + "color", function (req,res) {
+app.get(mainUrl + "color", function (req, res) {
     let colorType = req.query.type;
 
-    if(colorType === undefined) {
+    if (colorType === undefined || (colorType.toLowerCase() !== 'rgba' && colorType.toLowerCase() !== 'rgb')) {
         res.send("Incorrect data was passed");
         return;
     }
@@ -37,7 +37,7 @@ app.get(mainUrl + "color", function (req,res) {
 app.get(mainUrl + "domain", function (req,res) {
     let domainName = req.query.address;
 
-    if(domainName === undefined) {
+    if (domainName === undefined) {
         res.send("Incorrect data was passed");
         return;
     }
@@ -46,6 +46,6 @@ app.get(mainUrl + "domain", function (req,res) {
 
 });
 
-app.listen(port,() => {
+app.listen(port, () => {
     console.log("SERVER STARTED AT %d", port);
 });
