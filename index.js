@@ -1,12 +1,15 @@
 
-function getRandomColorHexCode() { // Get RGBA hex color
-    let rgbaColor = "#";
+function getRandomColorHexCode(transparency) { // Get RGB or RGBA hex color
+    let color = "#";
 
-    for(var i = 0; i < 4; i++) {
-        rgbaColor += Math.floor(Math.random() * 255).toString(16);
+    let l = 3;
+    if(transparency) l = 4;
+
+    for(var i = 0; i < l; i++) {
+        color += Math.floor(Math.random() * 255).toString(16);
     }
 
-    return rgbaColor;
+    return color;
 }
 
 function executeFunction(functionToExecute) { // Execute passed function
