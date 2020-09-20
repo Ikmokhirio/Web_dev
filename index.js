@@ -5,6 +5,17 @@ const port = 3000;
 const express = require("express");
 const app = express();
 
+app.get('/', function (req, res) {
+    res.send("<h1>" +mainUrl + "functionName?key=value</h1><br>" +
+        "<h4>№3 " + mainUrl + "color?type=rgba</h4>" +
+        "<p>Get random color in hex. Type can be RGBA or RGB</p><br><br>" +
+        "<h4>№6 " + mainUrl + "execute?function=f</h4>" +
+        "<p>Executes \'f\' as function on server</p><br><br>" +
+        "<h4>№16 " + mainUrl + "domain?address=a</h4>" +
+        "<p>Checks if \'a\' is correct domain name</p><br><br>");
+
+});
+
 app.get(mainUrl + "execute", function (req, res) {
     let functionString = req.query.function;
 
