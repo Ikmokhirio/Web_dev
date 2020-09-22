@@ -13,14 +13,13 @@ app.get('/', function (req, res) {
         "<p>Executes \'f\' as function on server</p><br><br>" +
         "<h4>№16 " + mainUrl + "domain?address=a</h4>" +
         "<p>Checks if \'a\' is correct domain name</p><br><br>");
-
 });
 
 app.get(mainUrl + "execute", function (req, res) {
     let functionString = req.query.function;
 
     if (functionString === undefined) {
-        res.send("Incorrect data was passed");
+        res.status(400).send("Incorrect data was passed");
         return;
     }
 
@@ -37,7 +36,7 @@ app.get(mainUrl + "color", function (req, res) {
     let colorType = req.query.type;
 
     if (colorType === undefined || (colorType.toLowerCase() !== 'rgba' && colorType.toLowerCase() !== 'rgb')) {
-        res.send("Incorrect data was passed");
+        res.status(400).send("Incorrect data was passed");
         return;
     }
 
@@ -49,7 +48,7 @@ app.get(mainUrl + "domain", function (req,res) {
     let domainName = req.query.address;
 
     if (domainName === undefined) {
-        res.send("Incorrect data was passed");
+        res.status(400).send("Incorrect data was passed");
         return;
     }
 
