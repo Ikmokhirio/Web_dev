@@ -7,6 +7,14 @@ const BAD_REQUEST = 400;
 const express = require("express");
 const app = express();
 
+app.use(function (req, res, next) {
+    let date = new Date();
+    let logData = `${date} ${req.method} request at ${req.url}`;
+    console.log(logData);
+
+    next();
+});
+
 app.get('/', function (req, res) {
     res.send("<h1>" + mainUrl + "functionName?key=value</h1><br>" +
         "<h4>№3 " + mainUrl + "color?type=rgba</h4>" +
