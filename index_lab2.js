@@ -99,7 +99,7 @@ app.use(function (err, req, res, next) {
 app.use(function (err, req, res, next) {
 
     let date = new Date();
-    let logData = `${date} ${err.name} at ${req.url}`;
+    let logData = `${date} ${err.name} at ${req.url}\n`;
 
     fs.appendFile(logFile,logData,function(err) {
         if(err) throw (err);
