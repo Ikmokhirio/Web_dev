@@ -1,0 +1,186 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    text-decoration: none;
+}
+
+body {
+    background-color: #333;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.wrapper{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #faeedd;
+    width: 100%;
+}
+
+.tasks {
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+.tasks a{
+
+    width: 100px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    transition: .3s linear;
+}
+
+.tasks a:hover {
+    color: #eb4d4b;
+}
+
+footer {
+    background-color: #faeedd;
+    padding: 0;
+    height: 10vh;
+}
+
+.footer{
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.links{
+    color: #001a21;
+    margin: 20px 20px;
+}
+
+.links a{
+    color: #001a21;
+    margin-right: 25px;
+    font-size: 22px;
+    text-decoration: none;
+    transition: .3s linear;
+}
+
+.links a:hover {
+    color: #fc5c65;
+}
+
+.rights-text {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.main {
+    min-height: 90vh;
+}
+
+.page_content {
+    color: #faeedd;
+
+    padding-bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    width: 80vw;
+    margin-left: 10%;
+    height: 70vh;
+
+    align-items: center;
+    justify-content: center;
+}
+.page_content p{
+    padding-top: 20px;
+}
+
+.page_content input[type="text"], textarea {
+    border: 0;
+    appearance: none;
+    background: #faeedd;
+    border-radius: 3px;
+    padding: 12px;
+    width: 250px;
+}
+
+.page_content input[type="submit"] {
+    border: 0;
+    appearance: none;
+    border-radius: 3px;
+    width: 125px;
+    height: 25px;
+    background-color: #faeedd;
+}
+
+.page_content input:focus::placeholder {
+    color: transparent;
+}
+
+.page_content input[type="text"]::placeholder {
+    color: #555555;
+    transition: color 0.3s ease;
+}
+
+.input_label {
+    font-weight: 700;
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.radio_buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.radio_buttons input[type="radio"] {
+    font-size: 50px;
+    color: #faeedd;
+    border: 1px solid #fff;
+    padding: 0.5em;
+    -webkit-appearance: none;
+}
+
+.color_input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    pointer-events: none;
+}
+
+.color_input p {
+    position: relative;
+    text-align: center;
+    margin: 10px;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.radio_buttons input[type="radio"]:checked {
+    background-color: #FFF;
+}
+
+.error {
+    color: #eb4d4b;
+    font-weight: bold;
+    text-transform:uppercase;
+}
