@@ -11,12 +11,23 @@ const mainUrl = '/api/DryavichevIvan/lab1/';
 const port = 3000;
 
 const authorizedUsername = 'admin';
+const colorPage = "color_page";
+const executePage = "execute_page";
+const domainPage = "domain_page";
+const title = 'WEB DEV'
 
 const express = require("express");
+const hbs = require("hbs")
+
 const app = express();
+app.set('view engine', 'hbs');
+
+hbs.registerPartials("./views/partials/")
 
 const fs = require('fs');
 const logFile = './test.log';
+
+app.use(express.static("public")); // Делаем файлы со стилями публично доступными
 
 app.use(function (req, res, next) {
     let date = new Date();
@@ -40,13 +51,22 @@ function authenticationCheck(req, res, next) { // Authentication
 }
 
 app.get('/', function (req, res) {
-    res.send("<h1>" + mainUrl + "functionName?key=value</h1><br>" +
-        "<h4>№3 " + mainUrl + "color?type=rgba</h4>" +
-        "<p>Get random color in hex. Type can be RGBA or RGB</p><br><br>" +
-        "<h4>№6 " + mainUrl + "execute?function=f</h4>" +
-        "<p>Executes \'f\' as function on server</p><br><br>" +
-        "<h4>№16 " + mainUrl + "domain?address=a</h4>" +
-        "<p>Checks if \'a\' is correct domain name</p><br><br>");
+    res.render('main.hbs', {
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage
+    });
+});
+
+app.get(mainUrl+"execute_page", function (req, res) {
+    res.render('execute_page.hbs', {
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        executePath: mainUrl + 'execute'
+    });
 });
 
 app.get(mainUrl + "execute", authenticationCheck, function (req, res) {
@@ -56,12 +76,31 @@ app.get(mainUrl + "execute", authenticationCheck, function (req, res) {
         throw new HttpError(BAD_REQUEST, "Incorrect data was passed");
     }
 
+    let answer = "Function was called successfully";
+
     try {
         functions.executeFunction(new Function(functionString));
-        res.send("Function was called successfully");
     } catch (e) {
-        res.send("An error occurred\n" + e.message);
+        answer = "An error occurred: " + e.message;
     }
+
+    res.render('answer.hbs',{
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        answer: answer
+    });
+});
+
+app.get(mainUrl+"color_page", function (req, res) {
+    res.render('color_page.hbs', {
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        executePath: mainUrl + 'color'
+    });
 });
 
 app.get(mainUrl + "color", function (req, res) {
@@ -71,8 +110,25 @@ app.get(mainUrl + "color", function (req, res) {
         throw new HttpError(BAD_REQUEST, "Incorrect data was passed");
     }
 
-    res.send("Your color is : " + functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba'));
+    // res.send("Your color is : " + functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba'));
+    let color = functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba');
+    res.render('answer.hbs',{
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        answer: "You color is : " + color
+    });
+});
 
+app.get(mainUrl+"domain_page", function (req, res) {
+    res.render('domain_page.hbs', {
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        executePath: mainUrl + 'domain'
+    });
 });
 
 app.get(mainUrl + "domain", authenticationCheck, function (req, res) {
@@ -82,8 +138,16 @@ app.get(mainUrl + "domain", authenticationCheck, function (req, res) {
         res.status(BAD_REQUEST).send("Incorrect data was passed");
         return;
     }
-    functions.isDomainCorrect(domainName) ? res.send("Domain is correct") : res.send("Domain in incorrect");
 
+    let answer = functions.isDomainCorrect(domainName) ? "Domain is correct" : "Domain in incorrect";
+
+    res.render('answer.hbs',{
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        answer: answer
+    });
 });
 
 app.use(function (req, res, next) { // 404 error
@@ -92,7 +156,14 @@ app.use(function (req, res, next) { // 404 error
 
 app.use(function (err, req, res, next) {
     //console.log(err.name);
-    res.status(err.statusCode).send(err.name + "<br>" + err.message);
+    // res.status(err.statusCode).send(err.name + "<br>" + err.message);
+    res.status(err.statusCode).render("error.hbs", {
+        title: title,
+        task1: mainUrl + executePage,
+        task2: mainUrl + colorPage,
+        task3: mainUrl + domainPage,
+        message: err.name + " " + err.message
+    });
     next(err);
 });
 
@@ -101,8 +172,8 @@ app.use(function (err, req, res, next) {
     let date = new Date();
     let logData = `${date} ${err.name} at ${req.url}\n`;
 
-    fs.appendFile(logFile,logData,function(err) {
-        if(err) throw (err);
+    fs.appendFile(logFile, logData, function (err) {
+        if (err) throw (err);
         console.log("Error was writed to the log");
     })
 });
