@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <link type="text/css" href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="main">
+        {{> menu}}
+
+        <div class="page_content">
+            <h1>api/DryavichevIvan/lab1/functionName?key=value</h1>
+            <p>№3 api/DryavichevIvan/lab1/color?type=rgba
+                <br>Get random color in hex. Type can be RGBA or RGB</p>
+            <p>#6 api/DryavichevIvan/lab1/execute?function=f
+                <br>Executes 'f' as function on server</p>
+            <p>#16 api/DryavichevIvan/lab1/domain?address=a
+                <br>Checks if 'a' is correct domain name</p>
+        </div>
+    </div>
+
+    {{> footer}}
+</div>
+</body>
+</html>
