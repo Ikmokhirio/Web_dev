@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Ikmokhirio/Web_dev#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "hbs": "^4.1.1"
   }
 }
