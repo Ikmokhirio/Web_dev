@@ -15,7 +15,7 @@ const {
     UNAUTHORIZED
 } = require("./HTTP_Error");
 
-module.exports = function(app) {
+module.exports = function (app) {
 
     app.use(logRequestToConsole);
 
@@ -79,14 +79,13 @@ module.exports = function(app) {
             throw new HttpError(BAD_REQUEST, "Incorrect data was passed");
         }
 
-        // res.send("Your color is : " + functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba'));
         let color = functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba');
         res.render('answer.hbs', {
             title: title,
             task1: mainUrl + executePage,
             task2: mainUrl + colorPage,
             task3: mainUrl + domainPage,
-            answer: "You color is : " + color
+            answer: "Your color is : " + color
         });
     });
 
@@ -119,7 +118,7 @@ module.exports = function(app) {
         });
     });
 
-    app.use(function (req, res, next) { // 404 error
+    app.use(function (req, res, next) {
         throw new HttpError(NOT_FOUND, 'Not Found');
     });
 
@@ -135,7 +134,6 @@ module.exports = function(app) {
     });
 
     app.use(logErrorsToFile);
-
 
 
 }
