@@ -174,7 +174,7 @@ app.use(function (err, req, res, next) {
 
     fs.appendFile(logFile, logData, function (err) {
         if (err) throw (err);
-        console.log("Error was writed to the log");
+        console.log("Error was written to the log");
     })
 });
 
