@@ -5,7 +5,7 @@ const {
     NOT_FOUND,
     BAD_REQUEST,
     UNAUTHORIZED
-} = require("./HTTP_Error");
+} = require("./httpError");
 
 function authenticationCheck(req, res, next) { // Authentication
     let username = req.query.username;

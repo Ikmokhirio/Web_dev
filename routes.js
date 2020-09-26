@@ -1,8 +1,8 @@
 const mainUrl = '/api/DryavichevIvan/lab1/';
-const functions = require("./lab1Functions");
-const colorPage = "color_page";
-const executePage = "execute_page";
-const domainPage = "domain_page";
+const functions = require("./functions");
+const colorInputPage = "colorInput";
+const functionInputPage = "functionInput";
+const domainInputPage = "domainInput";
 const title = 'WEB DEV'
 const authenticationCheck = require("./authentication").authenticationCheck
 const logRequestToConsole = require("./logger").logRequestToConsole
@@ -13,27 +13,27 @@ const {
     NOT_FOUND,
     BAD_REQUEST,
     UNAUTHORIZED
-} = require("./HTTP_Error");
+} = require("./httpError");
 
 module.exports = function (app) {
 
     app.use(logRequestToConsole);
 
     app.get('/', function (req, res) {
-        res.render('main.hbs', {
+        res.render('index.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage
         });
     });
 
-    app.get(mainUrl + "execute_page", function (req, res) {
-        res.render('execute_page.hbs', {
+    app.get(mainUrl + functionInputPage, function (req, res) {
+        res.render('functionInput.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             executePath: mainUrl + 'execute'
         });
     });
@@ -53,21 +53,21 @@ module.exports = function (app) {
             answer = "An error occurred: " + e.message;
         }
 
-        res.render('answer.hbs', {
+        res.render('result.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             answer: answer
         });
     });
 
-    app.get(mainUrl + "color_page", function (req, res) {
-        res.render('color_page.hbs', {
+    app.get(mainUrl + colorInputPage, function (req, res) {
+        res.render('colorInput.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             executePath: mainUrl + 'color'
         });
     });
@@ -80,21 +80,21 @@ module.exports = function (app) {
         }
 
         let color = functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba');
-        res.render('answer.hbs', {
+        res.render('result.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             answer: "Your color is : " + color
         });
     });
 
-    app.get(mainUrl + "domain_page", function (req, res) {
-        res.render('domain_page.hbs', {
+    app.get(mainUrl + domainInputPage, function (req, res) {
+        res.render('domainInput.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             executePath: mainUrl + 'domain'
         });
     });
@@ -109,11 +109,11 @@ module.exports = function (app) {
 
         let answer = functions.isDomainCorrect(domainName) ? "Domain is correct" : "Domain in incorrect";
 
-        res.render('answer.hbs', {
+        res.render('result.hbs', {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             answer: answer
         });
     });
@@ -125,9 +125,9 @@ module.exports = function (app) {
     app.use(function (err, req, res, next) {
         res.status(err.statusCode).render("error.hbs", {
             title: title,
-            task1: mainUrl + executePage,
-            task2: mainUrl + colorPage,
-            task3: mainUrl + domainPage,
+            task1: mainUrl + functionInputPage,
+            task2: mainUrl + colorInputPage,
+            task3: mainUrl + domainInputPage,
             message: err.name + " " + err.message
         });
         next(err);
