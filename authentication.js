@@ -10,7 +10,7 @@ const {
 function authenticationCheck(req, res, next) { // Authentication
     let username = req.query.username;
 
-    if (username === undefined) {
+    if (username === undefined || username === '') {
         throw new HttpError(UNAUTHORIZED, 'You should authorize to access this page');
     }
     if (username.toLowerCase() !== authorizedUsername) {
