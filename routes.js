@@ -22,8 +22,8 @@ module.exports = function (app) {
     app.get('/', function (req, res) {
         res.render('index.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage
         });
     });
@@ -31,8 +31,8 @@ module.exports = function (app) {
     app.get(mainUrl + functionInputPage, function (req, res) {
         res.render('functionInput.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             executePath: mainUrl + 'execute'
         });
@@ -55,8 +55,8 @@ module.exports = function (app) {
 
         res.render('result.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             answer: answer
         });
@@ -65,8 +65,8 @@ module.exports = function (app) {
     app.get(mainUrl + colorInputPage, function (req, res) {
         res.render('colorInput.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             executePath: mainUrl + 'color'
         });
@@ -82,8 +82,8 @@ module.exports = function (app) {
         let color = functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba');
         res.render('result.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             answer: "Your color is : " + color
         });
@@ -92,8 +92,8 @@ module.exports = function (app) {
     app.get(mainUrl + domainInputPage, function (req, res) {
         res.render('domainInput.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             executePath: mainUrl + 'domain'
         });
@@ -111,8 +111,8 @@ module.exports = function (app) {
 
         res.render('result.hbs', {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             answer: answer
         });
@@ -125,8 +125,8 @@ module.exports = function (app) {
     app.use(function (err, req, res, next) {
         res.status(err.statusCode).render("error.hbs", {
             title: title,
-            task1: mainUrl + functionInputPage,
-            task2: mainUrl + colorInputPage,
+            task1: mainUrl + colorInputPage,
+            task2: mainUrl + functionInputPage,
             task3: mainUrl + domainInputPage,
             message: err.name + " " + err.message
         });
