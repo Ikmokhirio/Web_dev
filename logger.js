@@ -1,9 +1,17 @@
 const logFile = './test.log';
 const fs = require('fs');
 
+function getCorrectIp(ip) { // Convert ip to ipv4 format
+    if (ip.substr(0, 7) === "::ffff:") {
+        ip = ip.substr(7)  // Check if ip is ipv6
+    }
+    return ip;
+}
+
 function logRequestToConsole(req, res, next) {
     let date = new Date();
-    let logData = `${date} ${req.method} request at ${req.url}`;
+    let ip = getCorrectIp(req.ip);
+    let logData = `${date} ${req.method} request at ${req.url} from ${ip}`;
     console.log(logData);
 
     next();
@@ -12,7 +20,11 @@ function logRequestToConsole(req, res, next) {
 function logErrorsToFile(err, req, res, next) {
 
     let date = new Date();
-    let logData = `${date} ${err.name} at ${req.url}\n`;
+    let ip = getCorrectIp(req.ip);
+    if (ip.substr(0, 7) === "::ffff:") { // Check if ip is ipv6
+        ip = ip.substr(7)
+    }
+    let logData = `${date} ${err.name} at ${req.url} from ${ip}\n`;
 
     if(typeof(err.statusCode) !== "number") {
         err.statusCode = 500;
