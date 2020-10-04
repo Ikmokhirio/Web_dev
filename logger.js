@@ -18,18 +18,10 @@ function logRequestToConsole(req, res, next) {
 }
 
 function logErrorsToFile(err, req, res, next) {
-
     let date = new Date();
     let ip = getCorrectIp(req.ip);
-    if (ip.substr(0, 7) === "::ffff:") { // Check if ip is ipv6
-        ip = ip.substr(7)
-    }
-    let logData = `${date} ${err.name} at ${req.url} from ${ip}\n`;
 
-    if(typeof(err.statusCode) !== "number") {
-        err.statusCode = 500;
-        err.statusMessage = "Internal server error";
-    }
+    let logData = `${date} ${err.name} at ${req.url} from ${ip}\n`;
 
     fs.appendFile(logFile, logData, function (err) {
         if (err) throw (err);
