@@ -9,6 +9,7 @@ const passport = require('passport');
 const flash = require('connect-flash')
 const initDatabase = require('./database').initDatabase;
 const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
 const keys = require('./config/keys');
 
 initDatabase()
@@ -21,10 +22,12 @@ app.use(express.static("public"));
 
 app.use(cookieSession({
     name: 'session',
-    // signed: false,
     keys: [keys.session.cookieSecret],
-    maxAge: (24 * 60 * 60 * 1000)
+    maxAge: 14400,
+    secure: false,
+    signed: true
 }));
+app.use(cookieParser()); // ?????
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
