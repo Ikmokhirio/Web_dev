@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+{{> head}}
+<body>
+<div class="wrapper">
+    <div class="main">
+        {{> menu}}
+
+        <div class="page_content">
+            <form method="post" action="{{loginPath}}">
+                <div class="input_label">
+                    <p>Input your username</p>
+                </div>
+
+                <input type="text" name='username' placeholder="Username"/>
+
+                <div class="input_label">
+                    <p>Input your password</p>
+                </div>
+
+                <input type="password" name="password" placeholder="Password"/>
+
+                <p><input type="submit" value="{{buttonName}}"></p>
+            </form>
+        </div>
+    </div>
+
+    {{> footer}}
+</div>
+</body>
+</html>
