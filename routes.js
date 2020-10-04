@@ -141,12 +141,12 @@ router.get('/' + loginPage, function (req, res) {
 });
 
 router.get('/' + registerPage, function (req, res) {
-    res.render('login.hbs', {
+    res.render('register.hbs', {
         title: title,
         task1: mainUrl + colorInputPage,
         task2: mainUrl + functionInputPage,
         task3: mainUrl + domainInputPage,
-        loginPath: '/' + registerPage,
+        register: '/' + registerPage,
         buttonName: 'REGISTER'
     });
 });
