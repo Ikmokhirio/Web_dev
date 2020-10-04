@@ -3,6 +3,8 @@ const functions = require("./functions");
 const colorInputPage = "colorInput";
 const functionInputPage = "functionInput";
 const domainInputPage = "domainInput";
+const loginPage = "login";
+const registerPage = "register";
 const title = 'WEB DEV'
 const authenticationCheck = require("./authentication").authenticationCheck
 const logRequestToConsole = require("./logger").logRequestToConsole
@@ -12,10 +14,12 @@ const {
     FORBIDDEN,
     NOT_FOUND,
     BAD_REQUEST,
-    UNAUTHORIZED
+    UNAUTHORIZED,
+    INTERNAL_SERVER_ERROR
 } = require("./httpError");
 
 router = require("express").Router()
+const passport = require('./pass').passport;
 
 router.use(logRequestToConsole);
 
@@ -118,11 +122,51 @@ router.get(mainUrl + "domain", authenticationCheck, function (req, res) {
     });
 });
 
+router.get('/' + loginPage, function (req, res) {
+    res.render('login.hbs', {
+        title: title,
+        task1: mainUrl + colorInputPage,
+        task2: mainUrl + functionInputPage,
+        task3: mainUrl + domainInputPage,
+        loginPath: '/' + loginPage,
+        buttonName: 'LOG IN'
+    });
+});
+
+router.get('/' + registerPage, function (req, res) {
+    res.render('login.hbs', {
+        title: title,
+        task1: mainUrl + colorInputPage,
+        task2: mainUrl + functionInputPage,
+        task3: mainUrl + domainInputPage,
+        loginPath: '/' + registerPage,
+        buttonName: 'REGISTER'
+    });
+});
+
+router.post('/' + loginPage, passport.authenticate('login', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
+
+router.post('/' + registerPage, passport.authenticate('register', {
+    successRedirect: '/login',
+    failureRedirect: '/',
+    failureFlash: true
+}));
+
 router.use(function (req, res, next) {
     throw new HttpError(NOT_FOUND, 'Not Found');
 });
 
 router.use(function (err, req, res, next) {
+
+    if(!err.statusCode) {
+        err.statusCode = INTERNAL_SERVER_ERROR;
+        err.name = INTERNAL_SERVER_ERROR + " ERROR";
+    }
+
     res.status(err.statusCode).render("error.hbs", {
         title: title,
         task1: mainUrl + colorInputPage,
