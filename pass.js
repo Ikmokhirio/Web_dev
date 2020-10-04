@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const CookieStrategy = require('passport-cookie').Strategy
 const User = require('./user').User
 const uploadUserToDatabase = require('./database').uploadUserToDatabase;
 
@@ -57,6 +58,20 @@ const registerStrategy = new LocalStrategy({
     }
 );
 
+const cookieStrategy = new CookieStrategy({
+    cookieName: 'session',
+    passReqToCallback: true
+}, function (req, session, done) {
+    User.findOne({username: req.user.username}, function (err, user) {
+        if (err) throw (err);
+        if (user) {
+            return done(null, user);
+        }
+        return done(null, false);
+    });
+
+});
+
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
@@ -69,6 +84,7 @@ passport.deserializeUser(function (id, done) {
 
 passport.use('login', loginStrategy);
 passport.use('register', registerStrategy);
+passport.use('cookie', cookieStrategy);
 
 
 exports.passport = passport;
