@@ -6,7 +6,6 @@ const domainInputPage = "domainInput";
 const loginPage = "login";
 const registerPage = "register";
 const title = 'WEB DEV'
-const authenticationCheck = require("./authentication").authenticationCheck
 const logRequestToConsole = require("./logger").logRequestToConsole
 const logErrorsToFile = require("./logger").logErrorsToFile
 const {
@@ -42,7 +41,11 @@ router.get(mainUrl + functionInputPage, function (req, res) {
     });
 });
 
-router.get(mainUrl + "execute", authenticationCheck, function (req, res) {
+router.get(mainUrl + "execute", passport.authenticate("cookie",
+    {
+        failureRedirect: '/login',
+        failureFlash: true
+    }), function (req, res) {
     let functionString = req.query.function;
 
     if (functionString === undefined) {
@@ -103,7 +106,11 @@ router.get(mainUrl + domainInputPage, function (req, res) {
     });
 });
 
-router.get(mainUrl + "domain", authenticationCheck, function (req, res) {
+router.get(mainUrl + "domain", passport.authenticate("cookie",
+    {
+        failureRedirect: '/login',
+        failureFlash: true
+    }), function (req, res) {
     let domainName = req.query.address;
 
     if (domainName === undefined) {
@@ -162,7 +169,7 @@ router.use(function (req, res, next) {
 
 router.use(function (err, req, res, next) {
 
-    if(!err.statusCode) {
+    if (!err.statusCode) {
         err.statusCode = INTERNAL_SERVER_ERROR;
         err.name = INTERNAL_SERVER_ERROR + " ERROR";
     }
