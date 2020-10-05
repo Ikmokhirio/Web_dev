@@ -17,28 +17,46 @@ const {
     INTERNAL_SERVER_ERROR
 } = require("./httpError");
 
+let header_data = {
+    title: title,
+    username: undefined,
+    task1: mainUrl + colorInputPage,
+    task2: mainUrl + functionInputPage,
+    task3: mainUrl + domainInputPage
+}
+
 router = require("express").Router()
 const passport = require('./pass').passport;
 
 router.use(logRequestToConsole);
 
+router.use(function (req, res, next) { // Get Logged User Username
+    let user = req.user;
+    if (user) {
+        header_data.username = user.username;
+    } else {
+        header_data.username = undefined;
+    }
+    next();
+});
+
 router.get('/', function (req, res) {
-    res.render('index.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage
-    });
+
+    let options = {
+        ...header_data
+    }
+
+    res.render('index.hbs', options);
 });
 
 router.get(mainUrl + functionInputPage, function (req, res) {
-    res.render('functionInput.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        executePath: mainUrl + 'execute'
-    });
+    let options = {
+        ...header_data,
+        ...{
+            executePath: mainUrl + 'execute'
+        }
+    }
+    res.render('functionInput.hbs', options);
 });
 
 router.get(mainUrl + "execute", passport.authenticate("cookie",
@@ -60,23 +78,25 @@ router.get(mainUrl + "execute", passport.authenticate("cookie",
         answer = "An error occurred: " + e.message;
     }
 
-    res.render('result.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        answer: answer
-    });
+    let options = {
+        ...header_data,
+        ...{
+            answer: answer
+        }
+    }
+
+    res.render('result.hbs', options);
 });
 
 router.get(mainUrl + colorInputPage, function (req, res) {
-    res.render('colorInput.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        executePath: mainUrl + 'color'
-    });
+
+    let options = {
+        ...header_data,
+        ...{
+            executePath: mainUrl + 'color'
+        }
+    }
+    res.render('colorInput.hbs', options);
 });
 
 router.get(mainUrl + "color", function (req, res) {
@@ -87,23 +107,27 @@ router.get(mainUrl + "color", function (req, res) {
     }
 
     let color = functions.getRandomColorHexCode(colorType.toLowerCase() === 'rgba');
-    res.render('result.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        answer: "Your color is : " + color
-    });
+
+    let options = {
+        ...header_data,
+        ...{
+            answer: "Your color is : " + color
+        }
+    }
+
+    res.render('result.hbs', options);
 });
 
 router.get(mainUrl + domainInputPage, function (req, res) {
-    res.render('domainInput.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        executePath: mainUrl + 'domain'
-    });
+
+    let options = {
+        ...header_data,
+        ...{
+            executePath: mainUrl + 'domain'
+        }
+    }
+
+    res.render('domainInput.hbs', options);
 });
 
 router.get(mainUrl + "domain", passport.authenticate("cookie",
@@ -120,35 +144,40 @@ router.get(mainUrl + "domain", passport.authenticate("cookie",
 
     let answer = functions.isDomainCorrect(domainName) ? "Domain is correct" : "Domain in incorrect";
 
-    res.render('result.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        answer: answer
-    });
+    let options = {
+        ...header_data,
+        ...{
+            answer: answer
+        }
+    }
+
+    res.render('result.hbs', options);
 });
 
 router.get('/' + loginPage, function (req, res) {
-    res.render('login.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        loginPath: '/' + loginPage,
-        buttonName: 'LOG IN'
-    });
+
+    let options = {
+        ...header_data,
+        ...{
+            loginPath: '/' + loginPage,
+            buttonName: 'LOG IN'
+        }
+    }
+
+    res.render('login.hbs', options);
 });
 
 router.get('/' + registerPage, function (req, res) {
-    res.render('register.hbs', {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        register: '/' + registerPage,
-        buttonName: 'REGISTER'
-    });
+
+    let options = {
+        ...header_data,
+        ...{
+            register: '/' + registerPage,
+            buttonName: 'REGISTER'
+        }
+    }
+
+    res.render('register.hbs', options);
 });
 
 router.post('/' + loginPage, passport.authenticate('login', {
@@ -174,13 +203,14 @@ router.use(function (err, req, res, next) {
         err.name = INTERNAL_SERVER_ERROR + " ERROR";
     }
 
-    res.status(err.statusCode).render("error.hbs", {
-        title: title,
-        task1: mainUrl + colorInputPage,
-        task2: mainUrl + functionInputPage,
-        task3: mainUrl + domainInputPage,
-        message: err.name + " " + err.message
-    });
+    let options = {
+        ...header_data,
+        ...{
+            message: err.name + " " + err.message
+        }
+    }
+
+    res.status(err.statusCode).render("error.hbs", options);
     next(err);
 });
 
