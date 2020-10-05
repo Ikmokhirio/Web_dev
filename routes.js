@@ -62,8 +62,8 @@ router.get(mainUrl + functionInputPage, function (req, res) {
 
 router.get(mainUrl + "execute", passport.authenticate("cookie",
     {
-        failureRedirect: '/login',
-        failureFlash: true
+        failureRedirect: '/login#message',
+        failureFlash: 'You should authorize'
     }), function (req, res) {
     let functionString = req.query.function;
 
@@ -133,8 +133,8 @@ router.get(mainUrl + domainInputPage, function (req, res) {
 
 router.get(mainUrl + "domain", passport.authenticate("cookie",
     {
-        failureRedirect: '/login',
-        failureFlash: true
+        failureRedirect: '/login#message',
+        failureFlash: 'You should authorize'
     }), function (req, res) {
     let domainName = req.query.address;
 
@@ -157,11 +157,30 @@ router.get(mainUrl + "domain", passport.authenticate("cookie",
 
 router.get('/' + loginPage, function (req, res) {
 
+    let error_name = "Error";
+    let error_messages = req.flash("error");
+    let error_message = undefined
+
+    if (error_messages) {
+        error_message = error_messages[0];
+    }
+
     let options = {
         ...header_data,
         ...{
             loginPath: '/' + loginPage,
             buttonName: 'LOG IN'
+        }
+    }
+    if (error_message) {
+        options = {
+            ...header_data,
+            ...{
+                loginPath: '/' + loginPage,
+                buttonName: 'LOG IN',
+                message: error_message,
+                message_title: error_name
+            }
         }
     }
 
@@ -170,11 +189,29 @@ router.get('/' + loginPage, function (req, res) {
 
 router.get('/' + registerPage, function (req, res) {
 
+    let error_name = "Error";
+    let error_messages = req.flash("error");
+    let error_message = undefined
+    if (error_messages) {
+        error_message = error_messages[0];
+    }
+
     let options = {
         ...header_data,
         ...{
-            register: '/' + registerPage,
+            registerPath: '/' + registerPage,
             buttonName: 'REGISTER'
+        }
+    }
+    if (error_message) {
+        options = {
+            ...header_data,
+            ...{
+                registerPath: '/' + registerPage,
+                buttonName: 'REGISTER',
+                message: error_message,
+                message_title: error_name
+            }
         }
     }
 
@@ -183,18 +220,18 @@ router.get('/' + registerPage, function (req, res) {
 
 router.post('/' + loginPage, passport.authenticate('login', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/login#message',
     failureFlash: true
 }));
 
 router.post('/' + registerPage, passport.authenticate('register', {
     successRedirect: '/login',
-    failureRedirect: '/',
+    failureRedirect: '/register#message',
     failureFlash: true
 }));
 
 router.get('/' + logoutPage, function (req, res) {
-    req.logout()
+    req.logout();
     res.redirect('/');
 });
 
