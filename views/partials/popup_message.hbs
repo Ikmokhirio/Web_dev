@@ -1,0 +1,16 @@
+{{#if message}}
+    {{#if message_title}}
+        <div id="message" class="popup">
+            <div class="popup_body">
+                <div class="popup_content">
+                    <div class="popup_title">{{message_title}}</div>
+                    <hr>
+                    <div class="popup_text">
+                        {{message}}
+                    </div>
+                    <a href="#" class="popup_close">CLOSE</a>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+{{/if}}
