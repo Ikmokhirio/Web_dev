@@ -60,7 +60,7 @@ header a {
     text-decoration: none;
 }
 
-.hello_message{
+.hello_message {
     position: absolute;
     left: 0;
     height: 64px;
@@ -160,7 +160,7 @@ footer {
     padding-top: 20px;
 }
 
-.page_content input[type="text"],.page_content input[type="password"], .page_content textarea {
+.page_content input[type="text"], .page_content input[type="password"], .page_content textarea {
     text-align: center;
     border: 2px solid #faeedd;
     appearance: none;
@@ -178,7 +178,7 @@ footer {
 }
 
 
-.page_content input[type="text"]:focus::placeholder,.page_content input[type="password"]:focus::placeholder {
+.page_content input[type="text"]:focus::placeholder, .page_content input[type="password"]:focus::placeholder {
     color: transparent;
 }
 
@@ -314,4 +314,87 @@ footer {
 
 .box-img:hover {
     box-shadow: 0 0 10px #eb4d4b;
+}
+
+/*POPUP STYLE*/
+
+.popup {
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+
+    visibility: hidden;
+    opacity: 0;
+}
+
+.popup:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup_body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 16px;
+}
+
+.popup_content {
+    background-color: #333;
+    color: #FFF;
+    min-width: 384px;
+    min-height: 128px;
+    padding: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px black;
+}
+
+.popup_content hr {
+    size:5px;
+    color: black;
+    width: 100%;
+}
+
+.popup_close {
+    margin: 16px;
+    text-decoration: none;
+    width: 64px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    border-radius: 4px;
+    color: #eb4d4b;
+    font-size: 16px;
+    font-weight: 600;
+    transition: .3s linear;
+    background-color: #faeedd;
+}
+
+.popup_close:hover {
+    transform: scale(1.2);
+    color: #faeedd;
+    background-color: #eb4d4b;
+}
+
+.popup_title {
+    padding-bottom: 16px;
+    font-size: 40px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.popup_text {
+    margin:16px;
+    font-size: 20px;
+    text-align: center;
 }
