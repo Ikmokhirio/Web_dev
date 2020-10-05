@@ -5,6 +5,7 @@ const functionInputPage = "functionInput";
 const domainInputPage = "domainInput";
 const loginPage = "login";
 const registerPage = "register";
+const logoutPage = "logout"
 const title = 'WEB DEV'
 const logRequestToConsole = require("./logger").logRequestToConsole
 const logErrorsToFile = require("./logger").logErrorsToFile
@@ -191,6 +192,11 @@ router.post('/' + registerPage, passport.authenticate('register', {
     failureRedirect: '/',
     failureFlash: true
 }));
+
+router.get('/' + logoutPage, function (req, res) {
+    req.logout()
+    res.redirect('/');
+});
 
 router.use(function (req, res, next) {
     throw new HttpError(NOT_FOUND, 'Not Found');
