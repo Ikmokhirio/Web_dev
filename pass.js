@@ -62,6 +62,7 @@ const cookieStrategy = new CookieStrategy({
     cookieName: 'session',
     passReqToCallback: true
 }, function (req, session, done) {
+    if(!req.user) return done(null,false);
     User.findOne({username: req.user.username}, function (err, user) {
         if (err) throw (err);
         if (user) {
