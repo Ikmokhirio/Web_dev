@@ -55,6 +55,47 @@ body {
     transform: scale(1.1);
 }
 
+header a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.hello_message{
+    position: absolute;
+    left: 0;
+    height: 64px;
+    width: 256px;
+    top: 18px;
+    z-index: 100;
+
+    background-color: #eb4d4b;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
+}
+
+.hello_message:hover {
+    box-shadow: 0 0 20px #eb4d4b;
+}
+
+.hello_message p {
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.hello_message p:hover {
+    font-size: 0;
+}
+
+.hello_message p:hover:after {
+    font-size: 30px;
+    font-weight: bold;
+    content: "LOG OUT";
+}
+
 footer {
     background-color: #faeedd;
     padding: 0;

@@ -1,5 +1,14 @@
 <header>
     <div class="header">
+
+        {{#if username }}
+            <a href="/logout">
+                <div class="hello_message" hover-message="LOG OUT">
+                    <p>Hello, {{username}}!</p>
+                </div>
+            </a>
+        {{/if}}
+
         <div class="menu">
             <a href="/">Home</a>
             <a href="/login">Login</a>
