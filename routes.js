@@ -63,7 +63,7 @@ router.get(mainUrl + functionInputPage, function (req, res) {
 router.get(mainUrl + "execute", passport.authenticate("cookie",
     {
         failureRedirect: '/login#message',
-        failureFlash: 'You should authorize'
+        failureFlash: true
     }), function (req, res) {
     let functionString = req.query.function;
 
@@ -134,7 +134,7 @@ router.get(mainUrl + domainInputPage, function (req, res) {
 router.get(mainUrl + "domain", passport.authenticate("cookie",
     {
         failureRedirect: '/login#message',
-        failureFlash: 'You should authorize'
+        failureFlash: true
     }), function (req, res) {
     let domainName = req.query.address;
 

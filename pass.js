@@ -14,7 +14,7 @@ const loginStrategy = new LocalStrategy({
         User.findOne({username: username}, function (err, user) {
             if (err) throw(err);
             if (!user) {
-                return done(null, false, {message: "INCORRECT USERNAME"});
+                return done(null, false, {message: "Incorrect username"});
             }
 
             user.validatePassword(password).then((result) => {
@@ -23,7 +23,7 @@ const loginStrategy = new LocalStrategy({
                     return done(null, user);
                 }
 
-                return done(null, false, {message: 'Incorrect password.'});
+                return done(null, false, {message: 'Incorrect password'});
             });
 
 
@@ -41,7 +41,7 @@ const registerStrategy = new LocalStrategy({
         User.findOne({username: username}, function (err, user) {
             if (err) throw(err);
             if (user) {
-                return done(null, false, {message: "USER ALREADY EXIST"});
+                return done(null, false, {message: "User already exist"});
             }
 
             uploadUserToDatabase(username, password).then((newUser) => {
@@ -49,7 +49,7 @@ const registerStrategy = new LocalStrategy({
                     return done(null, newUser);
                 }
 
-                return done(null, false);
+                return done(null, false, {message: "User was not added. Please try gain"});
 
             });
 
@@ -62,13 +62,13 @@ const cookieStrategy = new CookieStrategy({
     cookieName: 'session',
     passReqToCallback: true
 }, function (req, session, done) {
-    if(!req.user) return done(null,false);
+    if (!req.user) return done(null, false, {message: "You should authorize"});
     User.findOne({username: req.user.username}, function (err, user) {
         if (err) throw (err);
         if (user) {
             return done(null, user);
         }
-        return done(null, false);
+        return done(null, false, {message: "You should authorize"});
     });
 
 });

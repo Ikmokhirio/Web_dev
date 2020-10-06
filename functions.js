@@ -4,7 +4,7 @@ function getRandomColorHexCode(transparency) { // Get RGB or RGBA hex color
     let l = 3;
     if(transparency) l = 4;
 
-    for(var i = 0; i < l; i++) {
+    for(let i = 0; i < l; i++) {
         color += Math.floor(Math.random() * 255).toString(16);
     }
 

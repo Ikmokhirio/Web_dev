@@ -1,8 +1,9 @@
 const logFile = './test.log';
 const fs = require('fs');
+const ipv6Prefix = "::ffff:";
 
 function getCorrectIp(ip) { // Convert ip to ipv4 format
-    if (ip.substr(0, 7) === "::ffff:") {
+    if (ip.substr(0, 7) === ipv6Prefix) {
         ip = ip.substr(7)  // Check if ip is ipv6
     }
     return ip;

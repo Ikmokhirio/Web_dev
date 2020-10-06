@@ -11,18 +11,12 @@ async function addUserToDatabase(username, password) {
         username: username,
         password: hashedPassword
     });
-
-    console.log(hashedPassword);
-
     argon.verify(hashedPassword, password).then(() => {
-        console.log('Successful password supplied!');
-
         userUpload.save().then(() => {
             console.log("SUCCESSFUL UPLOAD");
         });
 
         return userUpload
-
     }).catch((err) => {
         console.err(err + ' Invalid password supplied!');
         return userUpload;
